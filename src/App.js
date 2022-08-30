@@ -1,12 +1,15 @@
 import { useState } from 'react';
 import './App.css';
-import { Message } from './components/Message/Message';
+import { AddMessageForm } from './components/AddMessageForm/AddMessageForm';
+import { MessageList } from './components/Message/MessageList';
 
 export const App = () => {
-  const [message, setMessage] = useState('Hello from props!')
+  const [messageList, setMessageList] = useState([])
+
   return (
     <div className="App">
-      <Message message={message} />
+      <MessageList messageList={messageList} />
+      <AddMessageForm messageList={messageList} setMessageList={setMessageList} />
     </div>
   );
 }
