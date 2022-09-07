@@ -4,12 +4,15 @@ import { AddMessageForm } from './components/AddMessageForm/AddMessageForm';
 import { MessageList } from './components/Message/MessageList';
 
 export const App = () => {
-  const [messageList, setMessageList] = useState([])
+  const [messageList, setMessageList] = useState([]);
+  const addMessage = (newMessage) => {
+    setMessageList((prevMesages) => [...prevMesages, newMessage]);
+  };
 
   return (
     <div className="App">
       <MessageList messageList={messageList} />
-      <AddMessageForm messageList={messageList} setMessageList={setMessageList} />
+      <AddMessageForm messageList={messageList} addMessage={addMessage} />
     </div>
   );
 }

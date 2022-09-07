@@ -1,42 +1,37 @@
 import { useState, useEffect } from "react";
 import { style } from "./AddMessageForm.module.css"
+import { AUTHOR } from '../constants';
 
-export const AddMessageForm = ({ messageList, setMessageList }) => {
-    const [author, setAuthor] = useState('');
-    const [message, setText] = useState('');
-    const [botAnswer, setBotAnswer] = useState('')
+export const AddMessageForm = ({ messageList, addMessage }) => {
+    const [text, setText] = useState('');
     useEffect(() => {
         let id
-        if (messageList.lenth !== 0) {
+        if (messageList.length > 0 &&
+            messageList[messageList.length - 1].author === AUTHOR.user) {
             id = setTimeout(() => {
-                setBotAnswer(`The massage was sent by ${author}`);
-                setTimeout(() => {
-                    setBotAnswer();
-                }, 1000);
+                addMessage({
+                    author: AUTHOR.bot,
+                    text: "I'm bot"
+                });
             }, 1500)
         }
         return () => clearTimeout(id)
     }, [messageList]);
-    const handleMessage = () => {
-        let text = {
-            author: author,
-            text: message
-        }
-        messageList.push(text)
-        setMessageList([...messageList]);
-    }
-    const handleAuthor = (e) => {
-        setAuthor(e.target.value)
+    const setMessage = (e) => {
+        e.preventDefault();
+        addMessage({
+            author: AUTHOR.user,
+            text,
+        });
+
     }
     const handleText = (e) => {
         setText(e.target.value)
     }
     return <>
-        <div className="messageForm">
-            <input type="text" name={author} placeholder="Type your name" onChange={handleAuthor} />
-            <input type="text" name={message} placeholder="Type your message" onChange={handleText} />
-            <button onClick={handleMessage}>Send Message</button>
-            <p>{botAnswer}</p>
-        </div>
+        <form className="messageForm" onSubmit={setMessage}>
+            <input type="text" name={text} placeholder="Type your message" onChange={handleText} />
+            <button >Send Message</button>
+        </form>
     </>
 }
