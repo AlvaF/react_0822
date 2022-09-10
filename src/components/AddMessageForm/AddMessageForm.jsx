@@ -29,8 +29,8 @@ export const AddMessageForm = ({ messageList, addMessage }) => {
         setText(e.target.value)
     }
     return <>
-        <form className="messageForm" onSubmit={setMessage}>
-            <input type="text" name={text} placeholder="Type your message" onChange={handleText} />
+        <form className="messageForm" data-testid="messageForm" onSubmit={setMessage}>
+            <input type="text" data-testid="input" name={text} placeholder="Type your message" onChange={handleText} />
             <button >Send Message</button>
         </form>
     </>
